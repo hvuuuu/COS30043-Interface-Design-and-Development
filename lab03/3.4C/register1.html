@@ -1,0 +1,109 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="utf-8" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Interface Design" />
+    <meta name="keywords"    content="Lab" />
+    <meta name="author"      content="Huy Vu Tran" />
+    <title>Regsitration App</title> 
+
+    <!-- Bootstrap -->  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">   
+</head> 
+<body>
+    <div class="container" id="app">
+        <h1>Regsitration App: Cloud Service</h1>
+        <div>
+            <h3>Login Information</h3>
+            <label for="user">Enter user name:</label>
+            <input v-model="user" id="user"><br>
+            <label for="pass">Enter password:</label>
+            <input v-model="pass" type="password" id="pass"><br>
+            <label for="repass">Re-enter password:</label>
+            <input v-model="repass" type="password" id="repass">
+            <span v-if="pass !== repass">
+                <span>Password does not match</span>
+            </span>
+        </div>
+        <div>
+            <h3>Phone Information</h3>
+            <div class="row">
+                <div class="col-6">
+                    <span>Operating System:</span><br>
+                    
+                    <input type="radio" v-model="os" name="os" id="and" value="Android" checked>
+                    <label for="and">Android</label>
+                    <input type="radio" v-model="os" name="os" id="ios" value="IOS">
+                    <label for="ios">IOS</label>
+                    <input type="radio" v-model="os" name="os" id="win" value="Windows">
+                    <label for="win">Windows</label>
+                </div>
+                <div class="col-6">
+                    <label for="model">Choose Model:</label>
+                    <select v-model="mo" id="model">
+                        <option v-for="model in filteredModels">{{ model.model }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3>Summary</h3>
+            <ul>
+                <li>User name: {{ user }}</li>
+                <li>OS: {{ os }}</li>
+                <li>Model: {{ mo }}</li>
+            </ul>
+        </div>
+         
+    </div>
+
+    
+    <!-- VueJS plug-ins --> 
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    models: 
+                        [
+                            {model:'HTC 10', os:'Android'},
+                            {model:'Nokia 6', os:'Android'},
+                            {model:'Samsung Galaxy 20 Ultra', os:'Android'},
+                            {model:'IDD VIOS Non Windows', os:'Android'},
+                            {model:'iPhone X', os:'IOS'},
+                            {model:'iPhone Xs Max', os:'IOS'},
+                            {model:'iPhone 11 Pro Max', os:'IOS'},
+                            {model:'IDD Windows Non Android', os:'IOS'},
+                            {model:'HP Elite x3', os:'Windows'},
+                            {model:'Microsoft 950', os:'Windows'},
+                            {model:'Microsoft 950XL', os:'Windows'},
+                            {model:'IDD VIOS Non Android', os:'Windows'}
+                        ],
+                    user: '',
+                    pass: '',
+                    repass: '',
+                    os: 'Android',
+                    mo: ''
+                }
+            },
+            computed: {
+                filteredModels() {
+                    return this.models.filter(model => {
+                        return this.os === '' || model.os === this.os;
+                    });
+                }
+            },
+            watch: {
+                os() {
+                    this.mo = '';
+                }
+            }
+        }).mount('#app')
+    </script>
+    
+    <!-- Bootstrap javascript plug-ins -->  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body> 
+</html> 
